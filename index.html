@@ -790,6 +790,31 @@
       box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
     }
 
+    /* 手机端Tab样式 */
+    .mobile-nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .mobile-nav-tab {
+      flex: 1;
+      padding: 0.75rem;
+      background: transparent;
+      border: 1px solid rgba(26, 26, 26, 0.15);
+      border-radius: 4px;
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .mobile-nav-tab.active {
+      background: var(--ink);
+      color: var(--ivory);
+      border-color: var(--ink);
+    }
+
     .mobile-sidebar.show {
       transform: translateX(0);
     }
@@ -949,6 +974,12 @@
 
   <!-- 手机端侧边栏 -->
   <aside class="mobile-sidebar" id="mobileSidebar">
+    <!-- 手机端Tab切换 -->
+    <div class="mobile-nav-tabs">
+      <button class="mobile-nav-tab active" data-tab="recipes">菜谱典藏</button>
+      <button class="mobile-nav-tab" data-tab="diary">厨房日记</button>
+    </div>
+    
     <div class="sidebar-title">分类导航</div>
     <nav class="category-nav">
       <div class="category-group expanded">
