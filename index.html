@@ -717,25 +717,211 @@
     }
 
     /* ═══════════════════════════════════════════
+       MOBILE HEADER & MENU
+    ═══════════════════════════════════════════ */
+    .mobile-header {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: rgba(250, 248, 245, 0.95);
+      backdrop-filter: blur(20px);
+      z-index: 200;
+      padding: 0 1.25rem;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(26, 26, 26, 0.08);
+    }
+
+    .mobile-logo {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .mobile-menu-btn {
+      width: 36px;
+      height: 36px;
+      background: var(--ink);
+      border: none;
+      border-radius: 4px;
+      color: var(--ivory);
+      font-size: 1.25rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mobile-overlay {
+      display: none;
+      position: fixed;
+      top: 60px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 150;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .mobile-overlay.show {
+      opacity: 1;
+    }
+
+    /* Mobile sidebar */
+    .mobile-sidebar {
+      display: none;
+      position: fixed;
+      top: 60px;
+      left: 0;
+      bottom: 0;
+      width: 280px;
+      background: var(--ivory);
+      z-index: 180;
+      padding: 1.5rem;
+      overflow-y: auto;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .mobile-sidebar.show {
+      transform: translateX(0);
+    }
+
+    /* ═══════════════════════════════════════════
        RESPONSIVE
     ═══════════════════════════════════════════ */
     @media (max-width: 768px) {
-      .recipes-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
+      /* 显示手机端头部 */
+      .mobile-header {
+        display: flex;
       }
 
-      .recipe-header, .recipe-body {
-        padding: 1.75rem;
+      body {
+        padding-top: 60px;
+      }
+
+      header {
+        padding: 2rem 1rem 1.5rem;
+      }
+
+      .masthead {
+        font-size: 2.5rem;
+      }
+
+      .tagline {
+        font-size: 0.75rem;
+        letter-spacing: 0.2em;
+      }
+
+      .nav-section {
+        display: none;
+      }
+
+      /* 隐藏桌面侧边栏，显示手机侧边栏 */
+      .sidebar {
+        display: none;
+      }
+
+      .page-layout {
+        grid-template-columns: 1fr;
+        padding: 0 1rem 4rem;
+        gap: 1.5rem;
+      }
+
+      .recipes-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .recipe-header {
+        padding: 1.5rem;
+      }
+
+      .recipe-number {
+        font-size: 0.7rem;
+      }
+
+      .recipe-title {
+        font-size: 1.5rem;
+      }
+
+      .recipe-meta {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+
+      .meta-item {
+        font-size: 0.75rem;
+      }
+
+      .recipe-body {
+        padding: 1.25rem 1.5rem;
+      }
+
+      .section-label {
+        font-size: 0.65rem;
+      }
+
+      .ingredients-table {
+        font-size: 0.8rem;
+      }
+
+      .step {
+        font-size: 0.85rem;
+        padding-left: 2.75rem;
+      }
+
+      .step::before {
+        width: 1.75rem;
+        height: 1.75rem;
+        font-size: 0.75rem;
+      }
+
+      .tips-section {
+        padding: 1rem;
+      }
+
+      .tips-content {
+        font-size: 0.8rem;
+      }
+
+      /* 日记部分 */
+      .diary-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
       }
 
       .diary-form-panel {
+        padding: 1.5rem;
         position: static;
       }
 
-      .nav-tab {
-        padding: 0.6rem 1.25rem;
-        font-size: 0.8rem;
+      .form-title {
+        font-size: 1.25rem;
+      }
+
+      .diary-entry {
+        padding: 1.25rem 1.5rem;
+      }
+
+      .diary-date {
+        font-size: 1rem;
+      }
+
+      footer {
+        padding: 2rem 1rem;
+        margin-top: 2rem;
+      }
+
+      .footer-brand {
+        font-size: 1rem;
       }
     }
 
@@ -748,6 +934,66 @@
   </style>
 </head>
 <body>
+  <!-- 手机端头部 -->
+  <div class="mobile-header">
+    <div class="mobile-logo">长玉的厨房</div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+  </div>
+
+  <!-- 手机端遮罩 -->
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <!-- 手机端侧边栏 -->
+  <aside class="mobile-sidebar" id="mobileSidebar">
+    <div class="sidebar-title">分类导航</div>
+    <nav class="category-nav">
+      <div class="category-group expanded">
+        <button class="category-header active" data-category="all">
+          <span>📋 全部菜谱</span>
+          <span class="category-count">9</span>
+        </button>
+      </div>
+      
+      <div class="category-group">
+        <button class="category-header" data-category="荤菜">
+          <span>🥩 荤菜</span>
+          <span class="category-count">5</span>
+          <span class="category-icon">▼</span>
+        </button>
+        <div class="category-dishes">
+          <div class="dish-link" data-target="腊肠炒茄子">腊肠炒茄子</div>
+          <div class="dish-link" data-target="肥牛炒芹菜">肥牛炒芹菜</div>
+          <div class="dish-link" data-target="姜葱炒猪肝">姜葱炒猪肝</div>
+          <div class="dish-link" data-target="胡萝卜芹菜炒肉丝">胡萝卜芹菜炒肉丝</div>
+          <div class="dish-link" data-target="辣椒炒肉">辣椒炒肉</div>
+        </div>
+      </div>
+      
+      <div class="category-group">
+        <button class="category-header" data-category="素菜">
+          <span>🥬 素菜</span>
+          <span class="category-count">3</span>
+          <span class="category-icon">▼</span>
+        </button>
+        <div class="category-dishes">
+          <div class="dish-link" data-target="蒜蓉娃娃菜">蒜蓉娃娃菜</div>
+          <div class="dish-link" data-target="蚝油生菜">蚝油生菜</div>
+          <div class="dish-link" data-target="蒜蓉菜心">蒜蓉菜心</div>
+        </div>
+      </div>
+      
+      <div class="category-group">
+        <button class="category-header" data-category="汤品">
+          <span>🍲 汤品</span>
+          <span class="category-count">1</span>
+          <span class="category-icon">▼</span>
+        </button>
+        <div class="category-dishes">
+          <div class="dish-link" data-target="红糖酒酿荷包蛋">红糖酒酿荷包蛋</div>
+        </div>
+      </div>
+    </nav>
+  </aside>
   <header>
     <h1 class="masthead">长玉的厨房</h1>
     <p class="tagline">顶级配方 · 传承经典</p>
@@ -1223,6 +1469,37 @@
   </footer>
 
   <script>
+    // ===== 手机端菜单功能 =====
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+    const mobileSidebar = document.getElementById('mobileSidebar');
+
+    function toggleMobileMenu() {
+      mobileSidebar.classList.toggle('show');
+      mobileOverlay.classList.toggle('show');
+      document.body.style.overflow = mobileSidebar.classList.contains('show') ? 'hidden' : '';
+    }
+
+    function closeMobileMenu() {
+      mobileSidebar.classList.remove('show');
+      mobileOverlay.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
+    if (mobileMenuBtn) {
+      mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+    }
+    if (mobileOverlay) {
+      mobileOverlay.addEventListener('click', closeMobileMenu);
+    }
+
+    // 手机端：点击分类后关闭菜单
+    document.querySelectorAll('.mobile-sidebar .category-header, .mobile-sidebar .dish-link').forEach(el => {
+      el.addEventListener('click', () => {
+        closeMobileMenu();
+      });
+    });
+
     // 初始化数据
     const initialDiary = [
       {
