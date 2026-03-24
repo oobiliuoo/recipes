@@ -1569,10 +1569,20 @@
     // 设置今天的日期
     document.getElementById('diaryDate').valueAsDate = new Date();
 
-    // 标签页切换
+    // 标签页切换（桌面端）
     document.querySelectorAll('.nav-tab').forEach(tab => {
       tab.addEventListener('click', () => {
         document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    // 标签页切换（手机端）
+    document.querySelectorAll('.mobile-nav-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.mobile-nav-tab').forEach(t => t.classList.remove('active'));
         document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
         tab.classList.add('active');
         document.getElementById(tab.dataset.tab).classList.add('active');
