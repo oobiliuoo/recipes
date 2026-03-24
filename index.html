@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>长玉的厨房 · 顶级配方</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ivory: #FAF8F5;
+      --ink: #1A1A1A;
+      --ink-light: #3D3D3D;
+      --ink-muted: #6B6B6B;
+      --vermilion: #C3272B;
+      --celadon: #8BAF98;
+      --amber: #D4A017;
+      --gold: #B8860B;
+      --warm-gray: #E8E4DF;
+      --card-bg: #FFFFFF;
+      --shadow-subtle: 0 2px 8px rgba(26, 26, 26, 0.04);
+      --shadow-medium: 0 8px 32px rgba(26, 26, 26, 0.08);
+      --shadow-elevated: 0 16px 48px rgba(26, 26, 26, 0.12);
+      --transition-smooth: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Noto Sans SC', -apple-system, sans-serif;
+      background: var(--ivory);
+      color: var(--ink);
+      line-height: 1.7;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ═══════════════════════════════════════════
+       HEADER - 编辑部风格
+    ═══════════════════════════════════════════ */
+    header {
+      text-align: center;
+      padding: 4rem 2rem 3rem;
+      position: relative;
+      background: linear-gradient(180deg, #FDFCFA 0%, var(--ivory) 100%);
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--ink-muted), transparent);
+    }
+
+    .masthead {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(3rem, 10vw, 5.5rem);
+      font-weight: 900;
+      letter-spacing: 0.15em;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+      line-height: 1.1;
+    }
+
+    .tagline {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--ink-muted);
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+    }
+
+    /* ═══════════════════════════════════════════
+       NAVIGATION - 简约标签
+    ═══════════════════════════════════════════ */
+    .nav-section {
+      display: flex;
+      justify-content: center;
+      padding: 2rem 0;
+      position: sticky;
+      top: 0;
+      background: rgba(250, 248, 245, 0.92);
+      backdrop-filter: blur(20px);
+      z-index: 100;
+      border-bottom: 1px solid rgba(26, 26, 26, 0.06);
+    }
+
+    /* ═══════════════════════════════════════════
+       SIDEBAR 导航
+    ═══════════════════════════════════════════ */
+    .page-layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 3rem;
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+    }
+
+    @media (max-width: 900px) {
+      .page-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 120px;
+      height: fit-content;
+    }
+
+    .sidebar-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--ink-muted);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(26, 26, 26, 0.08);
+    }
+
+    .category-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .category-group {
+      margin-bottom: 0.25rem;
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      color: var(--ink-muted);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      text-align: left;
+    }
+
+    .category-header:hover {
+      background: rgba(26, 26, 26, 0.03);
+      color: var(--ink);
+    }
+
+    .category-header.active {
+      background: var(--ink);
+      color: var(--ivory);
+      border-color: var(--ink);
+    }
+
+    .category-header .category-icon {
+      transition: transform 0.3s ease;
+    }
+
+    .category-header.active .category-icon {
+      transform: rotate(180deg);
+    }
+
+    .category-count {
+      font-size: 0.75rem;
+      opacity: 0.6;
+      background: rgba(255,255,255,0.15);
+      padding: 0.15rem 0.5rem;
+      border-radius: 10px;
+    }
+
+    .category-header:not(.active) .category-count {
+      background: rgba(26, 26, 26, 0.08);
+    }
+
+    .category-dishes {
+      display: none;
+      flex-direction: column;
+      padding: 0.5rem 0 0.5rem 1.5rem;
+      border-left: 1px solid rgba(26, 26, 26, 0.1);
+      margin-left: 1rem;
+      margin-top: 0.25rem;
+    }
+
+    .category-group.expanded .category-dishes {
+      display: flex;
+    }
+
+    .dish-link {
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      padding: 0.4rem 0;
+      cursor: pointer;
+      transition: color 0.2s;
+      text-decoration: none;
+    }
+
+    .dish-link:hover {
+      color: var(--vermilion);
+    }
+
+    .main-content {
+      min-width: 0;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .nav-tab {
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 0.75rem 1.75rem;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      letter-spacing: 0.1em;
+      position: relative;
+    }
+
+    .nav-tab:hover {
+      color: var(--ink);
+    }
+
+    .nav-tab.active {
+      color: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .nav-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--ivory);
+    }
+
+    /* ═══════════════════════════════════════════
+       CONTENT SECTIONS
+    ═══════════════════════════════════════════ */
+    .content-section {
+      display: none;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 3rem 2rem 6rem;
+      animation: fadeIn 0.6s ease;
+    }
+
+    .content-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ═══════════════════════════════════════════
+       RECIPES GRID - 杂志版式
+    ═══════════════════════════════════════════ */
+    .recipes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 3rem;
+    }
+
+    .recipe-card {
+      background: var(--card-bg);
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: var(--shadow-subtle);
+      transition: var(--transition-smooth);
+      position: relative;
+    }
+
+    .recipe-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-elevated);
+    }
+
+    .recipe-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--vermilion);
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
+    }
+
+    .recipe-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    /* Recipe Header */
+    .recipe-header {
+      padding: 2.5rem 2.5rem 1.5rem;
+      border-bottom: 1px solid rgba(26, 26, 26, 0.06);
+    }
+
+    .recipe-number {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      letter-spacing: 0.2em;
+      margin-bottom: 0.75rem;
+    }
+
+    .recipe-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    .recipe-meta {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Recipe Body */
+    .recipe-body {
+      padding: 2rem 2.5rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--vermilion);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(195, 39, 43, 0.15);
+    }
+
+    /* Ingredients Table */
+    .ingredients-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+
+    .ingredients-table th {
+      text-align: left;
+      font-weight: 500;
+      color: var(--ink-muted);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(26, 26, 26, 0.08);
+    }
+
+    .ingredients-table td {
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(26, 26, 26, 0.04);
+      color: var(--ink-light);
+    }
+
+    .ingredients-table td:first-child {
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    .ingredients-table td:last-child {
+      text-align: right;
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+    }
+
+    /* Steps */
+    .steps-list {
+      counter-reset: step;
+      list-style: none;
+    }
+
+    .step {
+      counter-increment: step;
+      position: relative;
+      padding-left: 3.5rem;
+      padding-bottom: 1.25rem;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px dashed rgba(26, 26, 26, 0.08);
+      font-size: 0.95rem;
+      color: var(--ink-light);
+      line-height: 1.8;
+    }
+
+    .step:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+
+    .step::before {
+      content: counter(step, cjk-ideographic);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 2rem;
+      height: 2rem;
+      background: var(--ink);
+      color: var(--ivory);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .step em {
+      color: var(--vermilion);
+      font-style: normal;
+      font-weight: 500;
+    }
+
+    /* Tips Section */
+    .tips-section {
+      margin-top: 1.5rem;
+      padding: 1.25rem;
+      background: rgba(139, 175, 152, 0.08);
+      border-radius: 4px;
+      border-left: 3px solid var(--celadon);
+    }
+
+    .tips-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--celadon);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .tips-content {
+      font-size: 0.85rem;
+      color: var(--ink-light);
+    }
+
+    /* ═══════════════════════════════════════════
+       DIARY SECTION
+    ═══════════════════════════════════════════ */
+    .diary-container {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    @media (max-width: 1000px) {
+      .diary-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Diary Form */
+    .diary-form-panel {
+      background: var(--card-bg);
+      padding: 2.5rem;
+      border-radius: 4px;
+      box-shadow: var(--shadow-medium);
+      position: sticky;
+      top: 100px;
+    }
+
+    .form-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(26, 26, 26, 0.08);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--ink-muted);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      border: 1px solid rgba(26, 26, 26, 0.12);
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      background: var(--ivory);
+      color: var(--ink);
+      transition: var(--transition-smooth);
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--ink);
+      box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.05);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .dish-tags-input {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .dish-tag {
+      background: var(--ink);
+      color: var(--ivory);
+      padding: 0.4rem 0.875rem;
+      border-radius: 2px;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      animation: tagPop 0.3s ease;
+    }
+
+    @keyframes tagPop {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .dish-tag-remove {
+      cursor: pointer;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+
+    .dish-tag-remove:hover {
+      opacity: 1;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 1rem;
+      background: var(--ink);
+      color: var(--ivory);
+      border: none;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      margin-top: 0.5rem;
+    }
+
+    .btn-submit:hover {
+      background: var(--vermilion);
+    }
+
+    /* Diary List */
+    .diary-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .diary-entry {
+      background: var(--card-bg);
+      padding: 2rem 2.5rem;
+      border-radius: 4px;
+      box-shadow: var(--shadow-subtle);
+      position: relative;
+      animation: slideIn 0.4s ease;
+      border-left: 4px solid var(--vermilion);
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .diary-date {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+
+    .diary-dishes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .diary-dish-tag {
+      background: rgba(195, 39, 43, 0.08);
+      color: var(--vermilion);
+      padding: 0.35rem 0.75rem;
+      border-radius: 2px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .diary-note {
+      font-size: 0.9rem;
+      color: var(--ink-muted);
+      font-style: italic;
+      padding-top: 1rem;
+      border-top: 1px dashed rgba(26, 26, 26, 0.08);
+    }
+
+    .diary-empty {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--ink-muted);
+    }
+
+    .diary-empty-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      opacity: 0.3;
+    }
+
+    .btn-delete {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      color: var(--ink-muted);
+      font-size: 1rem;
+      cursor: pointer;
+      opacity: 0.4;
+      transition: opacity 0.3s;
+    }
+
+    .btn-delete:hover {
+      opacity: 1;
+      color: var(--vermilion);
+    }
+
+    /* ═══════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════ */
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--ink-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid rgba(26, 26, 26, 0.06);
+      margin-top: 4rem;
+    }
+
+    .footer-brand {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.1rem;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════ */
+    @media (max-width: 768px) {
+      .recipes-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .recipe-header, .recipe-body {
+        padding: 1.75rem;
+      }
+
+      .diary-form-panel {
+        position: static;
+      }
+
+      .nav-tab {
+        padding: 0.6rem 1.25rem;
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 class="masthead">长玉的厨房</h1>
+    <p class="tagline">顶级配方 · 传承经典</p>
+  </header>
+
+  <nav class="nav-section">
+    <div class="nav-tabs">
+      <button class="nav-tab active" data-tab="recipes">菜谱典藏</button>
+      <button class="nav-tab" data-tab="diary">厨房日记</button>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════
+       RECIPES SECTION
+  ═══════════════════════════════════════════ -->
+  <section id="recipes" class="content-section active">
+    <div class="page-layout">
+      <aside class="sidebar">
+        <div class="sidebar-title">分类导航</div>
+        <nav class="category-nav">
+          <div class="category-group expanded">
+            <button class="category-header active" data-category="all">
+              <span>📋 全部菜谱</span>
+              <span class="category-count">9</span>
+            </button>
+          </div>
+          
+          <div class="category-group">
+            <button class="category-header" data-category="荤菜">
+              <span>🥩 荤菜</span>
+              <span class="category-count">5</span>
+              <span class="category-icon">▼</span>
+            </button>
+            <div class="category-dishes">
+              <div class="dish-link" data-target="腊肠炒茄子">腊肠炒茄子</div>
+              <div class="dish-link" data-target="肥牛炒芹菜">肥牛炒芹菜</div>
+              <div class="dish-link" data-target="姜葱炒猪肝">姜葱炒猪肝</div>
+              <div class="dish-link" data-target="胡萝卜芹菜炒肉丝">胡萝卜芹菜炒肉丝</div>
+              <div class="dish-link" data-target="辣椒炒肉">辣椒炒肉</div>
+            </div>
+          </div>
+          
+          <div class="category-group">
+            <button class="category-header" data-category="素菜">
+              <span>🥬 素菜</span>
+              <span class="category-count">3</span>
+              <span class="category-icon">▼</span>
+            </button>
+            <div class="category-dishes">
+              <div class="dish-link" data-target="蒜蓉娃娃菜">蒜蓉娃娃菜</div>
+              <div class="dish-link" data-target="蚝油生菜">蚝油生菜</div>
+              <div class="dish-link" data-target="蒜蓉菜心">蒜蓉菜心</div>
+            </div>
+          </div>
+          
+          <div class="category-group">
+            <button class="category-header" data-category="汤品">
+              <span>🍲 汤品</span>
+              <span class="category-count">1</span>
+              <span class="category-icon">▼</span>
+            </button>
+            <div class="category-dishes">
+              <div class="dish-link" data-target="红糖酒酿荷包蛋">红糖酒酿荷包蛋</div>
+            </div>
+          </div>
+        </nav>
+      </aside>
+      <div class="main-content">
+        <div class="recipes-grid">
+
+      <!-- 腊肠炒茄子 -->
+      <article class="recipe-card" data-category="荤菜">
+        <div class="recipe-header">
+          <div class="recipe-number">壹</div>
+          <h2 class="recipe-title">腊肠炒茄子</h2>
+          <div class="recipe-meta">
+            <span class="meta-item">🕒 15分钟</span>
+            <span class="meta-item">🔥 中火</span>
+            <span class="meta-item">👥 2人份</span>
+          </div>
+        </div>
+        <div class="recipe-body">
+          <div class="section-label">食材清单</div>
+          <table class="ingredients-table">
+            <tr><th>食材</th><th>用量</th></tr>
+            <tr><td>茄子</td><td>2根</td></tr>
+            <tr><td>腊肠</td><td>2根</td></tr>
+            <tr><td>蒜</td><td>3瓣</td></tr>
+            <tr><td>葱</td><td>1根</td></tr>
+            <tr><td>酱油</td><td>1勺</td></tr>
+            <tr><td>蚝油</td><td>1勺</td></tr>
+            <tr><td>白糖</td><td>半勺</td></tr>
+          </table>
+          
+          <div class="section-label">制作步骤</div>
+          <ol class="steps-list">
+            <li class="step">茄子切<em>滚刀块</em>，加盐腌10分钟，挤干水分（去涩防吸油）</li>
+            <li class="step">腊肠蒸熟切片，蒜切片，葱切段</li>
+            <li class="step">锅热倒油，先炒腊肠<em>出油</em></li>
+            <li class="step">下蒜片爆香，倒茄子翻炒</li>
+            <li class="step">加酱油、蚝油、糖、半碗水，<em>焖3分钟</em></li>
+            <li class="step">大火收汁，撒葱花出锅</li>
+          </ol>
+
+          <div class="tips-section">
+            <div class="tips-title">💡 大厨技巧</div>
+            <div class="tips-content">茄子用盐腌制后挤干，可去除涩味并防止吸油过多。腊肠先炒出油，利用其油脂炒茄子更香。</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 蒜蓉娃娃菜 -->
+      <article class="recipe-card" data-category="素菜">
+        <div class="recipe-header">
+          <div class="recipe-number">贰</div>
+          <h2 class="recipe-title">蒜蓉娃娃菜</h2>
+          <div class="recipe-meta">
+            <span class="meta-item">🕒 10分钟</span>
+            <span class="meta-item">🔥 小火</span>
+            <span class="meta-item">👥 2人份</span>
+          </div>
+        </div>
+        <div class="recipe-body">
+          <div class="section-label">食材清单</div>
+          <table class="ingredients-table">
+            <tr><th>食材</th><th>用量</th></tr>
+            <tr><td>娃娃菜</td><td>2颗</td></tr>
+            <tr><td>蒜</td><td>1头</td></tr>
+            <tr><td>盐</td><td>少许</td></tr>
+            <tr><td>蒸鱼豉油</td><td>1勺</td></tr>
+          </table>
+          
+          <div class="section-label">制作步骤</div>
+          <ol class="steps-list">
+            <li class="step">娃娃菜切条，沸水<em>焯1分钟</em>，捞出控水摆盘</li>
+            <li class="step">蒜末铺在娃娃菜上</li>
+            <li class="step">淋蒸鱼豉油，锅烧热油<em>浇蒜末激香</em></li>
+            <li class="step">完成</li>
+          </ol>
+
+          <div class="tips-section">
+            <div class="tips-title">💡 大厨技巧</div>
+            <div class="tips-content">热油浇蒜末的瞬间能激发出浓郁的蒜香，此步骤不可省略。娃娃菜焯水时间不宜过长，保持脆嫩口感。</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 肥牛炒芹菜 -->
+      <article class="recipe-card" data-category="荤菜">
+        <div class="recipe-header">
+          <div class="recipe-number">叁</div>
+          <h2 class="recipe-title">肥牛炒芹菜</h2>
+          <div class="recipe-meta">
+            <span class="meta-item">🕒 10分钟</span>
+            <span class="meta-item">🔥 大火</span>
+            <span class="meta-item">👥 2人份</span>
+          </div>
+        </div>
+        <div class="recipe-body">
+          <div class="section-label">食材清单</div>
+          <table class="ingredients-table">
+            <tr><th>食材</th><th>用量</th></tr>
+            <tr><td>肥牛卷</td><td>400g</td></tr>
+            <tr><td>芹菜</td><td>1棵</td></tr>
+            <tr><td>食用油</td><td>15g</td></tr>
+            <tr><td>盐</td><td>2g</td></tr>
+            <tr><td>生抽</td><td>15g</td></tr>
+          </table>
+          
+          <div class="section-label">制作步骤</div>
+          <ol class="steps-list">
+            <li class="step">芹菜洗净切段，沸水<em>焯半分钟</em>捞出</li>
+            <li class="step">锅热倒油，肥牛卷下锅<em>快速划散</em></li>
+            <li class="step">肥牛变色后倒入芹菜翻炒</li>
+            <li class="step">撒盐、倒生抽，翻炒均匀出锅</li>
+          </ol>
+
+          <div class="tips-section">
+            <div class="tips-title">💡 大厨技巧</div>
+            <div class="tips-content">肥牛卷下锅后要快速划散，避免粘连。全程大火快炒，保持肥牛鲜嫩和芹菜脆爽。芹菜焯水可去除涩味并保持翠绿。</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 蚝油生菜 -->
+      <article class="recipe-card" data-category="素菜">
+        <div class="recipe-header">
+          <div class="recipe-number">肆</div>
+          <h2 class="recipe-title">蚝油生菜</h2>
+          <div class="recipe-meta">
+            <span class="meta-item">🕒 5分钟</span>
+            <span class="meta-item">🔥 小火</span>
+            <span class="meta-item">👥 2人份</span>
+          </div>
+        </div>
+        <div class="recipe-body">
+          <div class="section-label">食材清单</div>
+          <table class="ingredients-table">
+            <tr><th>食材</th><th>用量</th></tr>
+            <tr><td>生菜</td><td>1棵</td></tr>
+            <tr><td>蒜</td><td>5瓣</td></tr>
+            <tr><td>酱油</td><td>10g</td></tr>
+            <tr><td>蚝油</td><td>15g</td></tr>
+            <tr><td>清水</td><td>半杯</td></tr>
+          </table>
+          
+          <div class="section-label">制作步骤</div>
+          <ol class="steps-list">
+            <li class="step">生菜洗净，开水中焯烫<em>变色即捞出</em>，码盘</li>
+            <li class="step">炒锅倒少许油，小火<em>煸香蒜末</em></li>
+            <li class="step">倒入酱油、蚝油、清水，煮开成汁</li>
+            <li class="step">将汁浇在生菜上，完成</li>
+          </ol>
+
+          <div class="tips-section">
+            <div class="tips-title">💡 大厨技巧</div>
+            <div class="tips-content">生菜焯水时间极短，变色即可，过久会失去脆嫩口感。蚝油汁不宜过稠，应呈流动状态以便均匀淋在生菜上。</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 红糖酒酿荷包蛋 -->
+      <article class="recipe-card" data-category="汤品">
+        <div class="recipe-header">
+          <div class="recipe-number">伍</div>
+          <h2 class="recipe-title">红糖酒酿荷包蛋</h2>
+          <div class="recipe-meta">
+            <span class="meta-item">🕒 10分钟</span>
+            <span class="meta-item">🔥 小火</span>
+            <span class="meta-item">👥 2人份</span>
+            <span class="meta-item">💕 经期暖宫</span>
+          </div>
+        </div>
+        <div class="recipe-body">
+          <div class="section-label">食材清单</div>
+          <table class="ingredients-table">
+            <tr><th>食材</th><th>用量</th></tr>
+            <tr><td>鸡蛋</td><td>2个</td></tr>
+            <tr><td>酒酿</td><td>100g</td></tr>
+            <tr><td>红糖</td><td>30g</td></tr>
+            <tr><td>枸杞</td><td>5g</td></tr>
+            <tr><td>清水</td><td>400ml</td></tr>
+          </table>
+          
+          <div class="section-label">制作步骤</div>
+          <ol class="steps-list">
+            <li class="step">锅中倒入清水，烧至<em>冒小泡</em>（不要完全沸腾）</li>
+            <li class="step">打入鸡蛋，小火煮3分钟至蛋白凝固</li>
+            <li class="step">用勺子轻轻推动，防止粘锅</li>
+            <li class="step">放入红糖，搅拌至融化</li>
+            <li class="step">加入酒酿和枸杞，小火煮2分钟完成</li>
+          </ol>
+
+          <div class="tips-section">
+            <div class="tips-title">💡 大厨技巧</div>
+            <div class="tips-content">水温控制在80-90度最完美，沸水会让蛋花散开。酒酿最后放，煮太久会变酸。经期量多者少放酒酿。</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 姜葱炒猪肝 -->
+      <article class="recipe-card" data-category="荤菜">
+        <div class="recipe-header">
+          <div class="recipe-number">陆</div>
+          <h2 class="recipe-title">姜葱炒猪肝</h2>
+          <div class="recipe-meta">
+            <span class="meta-item">🕒 15分钟</span>
+            <span class="meta-item">🔥 大火</span>
+            <span class="meta-item">👥 2人份</span>
+            <span class="meta-item">💕 补铁补血</span>
+          </div>
+        </div>
+        <div class="recipe-body">
+          <div class="section-label">食材清单</div>
+          <table class="ingredients-table">
+            <tr><th>食材</th><th>用量</th></tr>
+            <tr><td>猪肝</td><td>300g</td></tr>
+            <tr><td>姜丝</td><td>30g</td></tr>
+            <tr><td>葱段</td><td>3根</td></tr>
+            <tr><td>蒜片</td><td>3瓣</td></tr>
+            <tr><td>青红椒</td><td>各半个</td></tr>
+            <tr><td>料酒</td><td>1勺</td></tr>
+            <tr><td>盐</td><td>2g</td></tr>
+            <tr><td>淀粉</td><td>1勺</td></tr>
+            <tr><td>生抽</td><td>1勺</td></tr>
+            <tr><td>蚝油</td><td>1勺</td></tr>
+          </table>
+          
+          <div class="section-label">制作步骤</div>
+          <ol class="steps-list">
+            <li class="step">猪肝切<em>薄片</em>，清水反复冲洗至无血水，沥干</li>
+            <li class="step">加料酒、盐、淀粉、食用油<em>抓匀腌制</em>5分钟</li>
+            <li class="step">锅烧至冒烟倒油，下猪肝<em>快速滑散</em>，变色即盛出（约20秒）</li>
+            <li class="step">锅中留底油，下姜蒜片、青红椒<em>爆香</em></li>
+            <li class="step">倒入猪肝翻炒5秒，淋入碗汁（生抽+蚝油+糖+清水）</li>
+            <li class="step">下葱段，出锅</li>
+          </ol>
+
+          <div class="tips-section">
+            <div class="tips-title">💡 大厨技巧</div>
+            <div class="tips-content">猪肝一定要反复冲洗去血水，否则腥。大火快炒，时间不超过20秒，炒老了会硬。切薄后用淀粉抓匀，形成保护膜更嫩滑。</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 辣椒炒肉 -->
+      <article class="recipe-card" data-category="荤菜">
+        <div class="recipe-header">
+          <div class="recipe-number">捌</div>
+          <h2 class="recipe-title">辣椒炒肉</h2>
+          <div class="recipe-meta">
+            <span class="meta-item">🕒 15分钟</span>
+            <span class="meta-item">🔥 大火</span>
+            <span class="meta-item">👥 2人份</span>
+            <span class="meta-item">🌶️ 辣</span>
+          </div>
+        </div>
+        <div class="recipe-body">
+          <div class="section-label">食材清单</div>
+          <table class="ingredients-table">
+            <tr><th>食材</th><th>用量</th></tr>
+            <tr><td>猪腿肉</td><td>300g</td></tr>
+            <tr><td>青辣椒</td><td>适量</td></tr>
+            <tr><td>红辣椒</td><td>适量</td></tr>
+            <tr><td>蒜</td><td>3-4瓣</td></tr>
+            <tr><td>生抽</td><td>2勺</td></tr>
+            <tr><td>老抽</td><td>1勺</td></tr>
+            <tr><td>蚝油</td><td>1勺</td></tr>
+            <tr><td>料酒</td><td>1勺</td></tr>
+            <tr><td>盐</td><td>适量</td></tr>
+            <tr><td>淀粉</td><td>少许</td></tr>
+          </table>
+          
+          <div class="section-label">制作步骤</div>
+          <ol class="steps-list">
+            <li class="step">肉片加<em>生抽、料酒、淀粉</em>抓匀，腌10分钟</li>
+            <li class="step">锅热倒油，下辣椒煸炒至<em>虎皮状</em>，盛出备用</li>
+            <li class="step">底油烧热，下蒜片爆香，倒入肉片<em>大火翻炒</em>至变色</li>
+            <li class="step">放入辣椒一起炒，加老抽上色、蚝油提鲜</li>
+            <li class="step">盐调味，大火翻匀出锅</li>
+          </ol>
+
+          <div class="tips-section">
+            <div class="tips-title">💡 大厨技巧</div>
+            <div class="tips-content">辣椒先炒可以激出香味，炒到表面虎皮状更好吃。肉片大火快炒，保持嫩滑。出锅前沿锅边淋点醋，香味更绝。</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 蒜蓉菜心 -->
+      <article class="recipe-card" data-category="素菜">
+        <div class="recipe-header">
+          <div class="recipe-number">玖</div>
+          <h2 class="recipe-title">蒜蓉菜心</h2>
+          <div class="recipe-meta">
+            <span class="meta-item">🕒 5分钟</span>
+            <span class="meta-item">🔥 大火</span>
+            <span class="meta-item">👥 2人份</span>
+          </div>
+        </div>
+        <div class="recipe-body">
+          <div class="section-label">食材清单</div>
+          <table class="ingredients-table">
+            <tr><th>食材</th><th>用量</th></tr>
+            <tr><td>菜心</td><td>300g</td></tr>
+            <tr><td>蒜</td><td>3瓣</td></tr>
+            <tr><td>盐</td><td>1茶匙</td></tr>
+            <tr><td>糖</td><td>1茶匙</td></tr>
+            <tr><td>油</td><td>适量</td></tr>
+          </table>
+          
+          <div class="section-label">制作步骤</div>
+          <ol class="steps-list">
+            <li class="step">菜心洗净，<em>切掉老根</em>，沥干水分</li>
+            <li class="step">锅热倒油，放一半蒜蓉<em>炒出香味</em></li>
+            <li class="step">放入菜心<em>大火翻炒</em>至微软</li>
+            <li class="step">倒入剩下的一半蒜蓉，翻匀</li>
+            <li class="step">加盐、糖，少许水，翻炒均匀出锅</li>
+          </ol>
+
+          <div class="tips-section">
+            <div class="tips-title">💡 大厨技巧</div>
+            <div class="tips-content">全程大火快炒，保持菜心爽脆。分两次放蒜蓉，香味更浓。也可以先焯水40秒再炒，更绿更亮。</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 胡萝卜芹菜炒肉丝 -->
+      <article class="recipe-card" data-category="荤菜">
+        <div class="recipe-header">
+          <div class="recipe-number">柒</div>
+          <h2 class="recipe-title">胡萝卜芹菜炒肉丝</h2>
+          <div class="recipe-meta">
+            <span class="meta-item">🕒 15分钟</span>
+            <span class="meta-item">🔥 大火</span>
+            <span class="meta-item">👥 2人份</span>
+            <span class="meta-item">💕 补铁补蛋白</span>
+          </div>
+        </div>
+        <div class="recipe-body">
+          <div class="section-label">食材清单</div>
+          <table class="ingredients-table">
+            <tr><th>食材</th><th>用量</th></tr>
+            <tr><td>猪里脊肉</td><td>200g</td></tr>
+            <tr><td>芹菜</td><td>200g</td></tr>
+            <tr><td>胡萝卜</td><td>1根</td></tr>
+            <tr><td>姜丝</td><td>3片</td></tr>
+            <tr><td>蒜片</td><td>2瓣</td></tr>
+            <tr><td>葱段</td><td>1根</td></tr>
+            <tr><td>生抽</td><td>2勺</td></tr>
+            <tr><td>料酒</td><td>1勺</td></tr>
+            <tr><td>淀粉</td><td>1勺</td></tr>
+            <tr><td>蚝油</td><td>1勺</td></tr>
+          </table>
+          
+          <div class="section-label">制作步骤</div>
+          <ol class="steps-list">
+            <li class="step">肉丝加<em>生抽、料酒、淀粉、食用油</em>抓匀腌制10分钟</li>
+            <li class="step">芹菜切段，沸水<em>焯30秒</em>，捞出沥干</li>
+            <li class="step">胡萝卜切丝</li>
+            <li class="step">锅烧热倒油，下肉丝<em>快速滑散</em>，变色即盛出（约20秒）</li>
+            <li class="step">锅中留底油，姜蒜爆香</li>
+            <li class="step">放胡萝卜丝翻炒10秒，倒入芹菜、肉丝</li>
+            <li class="step">淋入碗汁（生抽+蚝油+糖+清水），<em>大火翻炒均匀</em></li>
+            <li class="step">撒葱段，出锅</li>
+          </ol>
+
+          <div class="tips-section">
+            <div class="tips-title">💡 大厨技巧</div>
+            <div class="tips-content">芹菜焯水可去除涩味，保持翠绿。肉丝滑炒时间要短，变色就盛出，炒久了会老。盐最后放。</div>
+          </div>
+        </div>
+      </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       DIARY SECTION
+  ═══════════════════════════════════════════ -->
+  <section id="diary" class="content-section">
+    <div class="diary-container">
+      <div class="diary-form-panel">
+        <h3 class="form-title">记录今日厨房</h3>
+        
+        <div class="form-group">
+          <label class="form-label">日期</label>
+          <input type="date" class="form-input" id="diaryDate">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">今日菜品</label>
+          <input type="text" class="form-input" id="dishInput" placeholder="输入菜名后按回车添加">
+          <div class="dish-tags-input" id="dishTags"></div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">心得备注</label>
+          <textarea class="form-input form-textarea" id="diaryNote" placeholder="今天做得怎么样？有什么心得或改进？"></textarea>
+        </div>
+        
+        <button class="btn-submit" onclick="addDiaryEntry()">保存日记</button>
+      </div>
+      
+      <div class="diary-list" id="diaryList"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-brand">长玉的厨房 🐷</div>
+    <p>用心做菜，以爱调味</p>
+  </footer>
+
+  <script>
+    // 初始化数据
+    const initialDiary = [
+      {
+        id: 4,
+        date: '2026-03-24',
+        dishes: ['辣椒炒肉', '蒜蓉菜心'],
+        note: '湖南人必须辣！一硬一素，搭配刚好'
+      },
+      {
+        id: 3,
+        date: '2026-03-19',
+        dishes: ['红糖酒酿荷包蛋', '胡萝卜芹菜炒肉丝'],
+        note: '经期暖宫套餐，一汤一荤'
+      },
+      {
+        id: 2,
+        date: '2026-03-18',
+        dishes: ['芹菜炒肥牛', '蚝油生菜'],
+        note: '经期快手家常菜'
+      },
+      {
+        id: 1,
+        date: '2026-03-17',
+        dishes: ['腊肠炒茄子', '蒜蓉娃娃菜'],
+        note: '俩菜一汤，妥妥的！'
+      }
+    ];
+    
+    let selectedDishes = [];
+    let diaryData = JSON.parse(localStorage.getItem('kitchenDiary') || JSON.stringify(initialDiary));
+
+    // 设置今天的日期
+    document.getElementById('diaryDate').valueAsDate = new Date();
+
+    // 标签页切换
+    document.querySelectorAll('.nav-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    // 分类筛选
+    document.querySelectorAll('.category-header').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const category = btn.dataset.category;
+        
+        // 更新按钮状态
+        document.querySelectorAll('.category-header').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // 展开/收起子菜单
+        const group = btn.closest('.category-group');
+        if (category !== 'all') {
+          group.classList.toggle('expanded');
+        }
+        
+        // 筛选卡片
+        const cards = document.querySelectorAll('.recipe-card');
+        
+        cards.forEach(card => {
+          if (category === 'all' || card.dataset.category === category) {
+            card.style.display = '';
+            card.style.animation = 'fadeIn 0.4s ease';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // 点击菜名快速导航
+    document.querySelectorAll('.dish-link').forEach(link => {
+      link.addEventListener('click', () => {
+        const targetTitle = link.dataset.target;
+        const targetCard = Array.from(document.querySelectorAll('.recipe-card')).find(card => 
+          card.querySelector('.recipe-title').textContent === targetTitle
+        );
+        
+        if (targetCard) {
+          // 隐藏所有卡片，先显示目标
+          document.querySelectorAll('.recipe-card').forEach(c => c.style.display = 'none');
+          targetCard.style.display = '';
+          targetCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          
+          // 更新分类按钮状态
+          const category = targetCard.dataset.category;
+          document.querySelectorAll('.category-header').forEach(b => b.classList.remove('active'));
+          document.querySelector(`.category-header[data-category="${category}"]`).classList.add('active');
+          
+          // 展开对应分类
+          document.querySelectorAll('.category-group').forEach(g => g.classList.remove('expanded'));
+          link.closest('.category-group').classList.add('expanded');
+        }
+      });
+    });
+
+    // 添加菜品标签
+    document.getElementById('dishInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const dish = e.target.value.trim();
+        if (dish && !selectedDishes.includes(dish)) {
+          selectedDishes.push(dish);
+          renderDishTags();
+        }
+        e.target.value = '';
+      }
+    });
+
+    function renderDishTags() {
+      const container = document.getElementById('dishTags');
+      container.innerHTML = selectedDishes.map((dish, i) => 
+        `<span class="dish-tag">${dish} <span class="dish-tag-remove" onclick="removeDish(${i})">✕</span></span>`
+      ).join('');
+    }
+
+    function removeDish(index) {
+      selectedDishes.splice(index, 1);
+      renderDishTags();
+    }
+
+    // 添加日记
+    function addDiaryEntry() {
+      const date = document.getElementById('diaryDate').value;
+      const note = document.getElementById('diaryNote').value.trim();
+      
+      if (!date || selectedDishes.length === 0) {
+        alert('请选择日期并至少添加一道菜');
+        return;
+      }
+
+      const entry = {
+        id: Date.now(),
+        date: date,
+        dishes: [...selectedDishes],
+        note: note
+      };
+
+      diaryData.unshift(entry);
+      saveDiary();
+      renderDiaryList();
+      
+      // 重置表单
+      selectedDishes = [];
+      renderDishTags();
+      document.getElementById('diaryNote').value = '';
+      document.getElementById('diaryDate').valueAsDate = new Date();
+    }
+
+    // 删除日记
+    function deleteDiary(id) {
+      if (confirm('确定要删除这条日记吗？')) {
+        diaryData = diaryData.filter(d => d.id !== id);
+        saveDiary();
+        renderDiaryList();
+      }
+    }
+
+    // 保存到 localStorage
+    function saveDiary() {
+      localStorage.setItem('kitchenDiary', JSON.stringify(diaryData));
+    }
+
+    // 渲染日记列表
+    function renderDiaryList() {
+      const container = document.getElementById('diaryList');
+      
+      if (diaryData.length === 0) {
+        container.innerHTML = `
+          <div class="diary-empty">
+            <div class="diary-empty-icon">📔</div>
+            <p>还没有日记<br>快来记录第一顿吧</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = diaryData.map(entry => `
+        <div class="diary-entry">
+          <button class="btn-delete" onclick="deleteDiary(${entry.id})" title="删除">🗑</button>
+          <div class="diary-date">${formatDate(entry.date)}</div>
+          <div class="diary-dishes">
+            ${entry.dishes.map(d => `<span class="diary-dish-tag">${d}</span>`).join('')}
+          </div>
+          ${entry.note ? `<div class="diary-note">${entry.note}</div>` : ''}
+        </div>
+      `).join('');
+    }
+
+    // 格式化日期
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      const weekDays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      const weekDay = weekDays[date.getDay()];
+      return `${year}年${month}月${day}日 · ${weekDay}`;
+    }
+
+    // 初始化渲染
+    renderDiaryList();
+  </script>
+</body>
+</html>
